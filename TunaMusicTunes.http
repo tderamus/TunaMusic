@@ -1,0 +1,6 @@
+@TunaMusicTunes_HostAddress = http://localhost:5208
+
+GET {{TunaMusicTunes_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
