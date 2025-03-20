@@ -8,7 +8,7 @@ public class TunaMusicDbContext : DbContext
     }
     public DbSet<Song> Song { get; set; }
     public DbSet<Artist> Artist { get; set; }
-    public DbSet<Genre> Genre { get; set; }
+    public DbSet<Genre> Genres { get; set; }
     
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -23,26 +23,15 @@ public class TunaMusicDbContext : DbContext
             .Property(g => g.Id)
             .ValueGeneratedOnAdd();
 
-        // Set up the many-to-many relationship between Song and Genre
         modelBuilder.Entity<Song>()
-            .HasMany(s => s.Genres)
-            .WithMany(g => g.Songs)
-            .UsingEntity<Dictionary<string, object>>(
-                "SongGenre",
-                j => j
-                    .HasOne<Genre>()
-                    .WithMany()
-                    .HasForeignKey("GenreId")
-                    .HasConstraintName("FK_SongGenre_Genre"),
-                j => j
-                    .HasOne<Song>()
-                    .WithMany()
-                    .HasForeignKey("SongId")
-                    .HasConstraintName("FK_SongGenre_Song"),
-                j =>
-                {
-                    j.HasKey("SongId", "GenreId");
-                });
+            .HasOne(s => s.Artist)
+            .WithMany()
+            .HasForeignKey(s => s.ArtistId)
+            .OnDelete(DeleteBehavior.Cascade);
+
+        // Define the many-to-many relationship between Song and Genre
+        modelBuilder.Entity<Song_Genre>()
+            .HasKey(sg => new { sg.SongId, sg.GenreId });
     }
 }
 

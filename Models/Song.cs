@@ -7,11 +7,10 @@ public class Song
 {
     [Key]
     public int Id { get; set; }
-    public string Title { get; set; }
+    public string? Title { get; set; }
     public string? Album { get; set; }
-    public int ArtistId { get; set; }
     public int Length { get; set; }
-
-    // Navigation property
-    public List<Genre> Genres { get; set; } = new List<Genre>();
+    public int? ArtistId { get; set; }
+    public Artist? Artist { get; set; }
+    public List<Genre>? Genres { get; set; }
 }

@@ -5,7 +5,8 @@ public class Artist
 {
     [Key]
     public int Id { get; set; }
+    required
     public string Name { get; set; }
     public int Age { get; set; }
-    public string Bio { get; set; }
+    public string? Bio { get; set; }
 }
