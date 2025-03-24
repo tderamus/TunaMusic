@@ -56,12 +56,7 @@ namespace TunaMusicTunes.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
-                    b.Property<int?>("SongId")
-                        .HasColumnType("integer");
-
                     b.HasKey("Id");
-
-                    b.HasIndex("SongId");
 
                     b.ToTable("Genres");
                 });
@@ -96,39 +91,61 @@ namespace TunaMusicTunes.Migrations
             modelBuilder.Entity("TunaMusicTunes.Models.Song_Genre", b =>
                 {
                     b.Property<int>("SongId")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("integer");
 
                     b.Property<int>("GenreId")
                         .HasColumnType("integer");
 
-                    b.Property<int>("Id")
-                        .HasColumnType("integer");
-
                     b.HasKey("SongId", "GenreId");
 
-                    b.ToTable("Song_Genre");
-                });
+                    b.HasIndex("GenreId");
 
-            modelBuilder.Entity("TunaMusicTunes.Models.Genre", b =>
-                {
-                    b.HasOne("TunaMusicTunes.Models.Song", null)
-                        .WithMany("Genres")
-                        .HasForeignKey("SongId");
+                    b.ToTable("Song_Genres");
                 });
 
             modelBuilder.Entity("TunaMusicTunes.Models.Song", b =>
                 {
                     b.HasOne("TunaMusicTunes.Models.Artist", "Artist")
-                        .WithMany()
+                        .WithMany("Songs")
                         .HasForeignKey("ArtistId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.Navigation("Artist");
                 });
 
+            modelBuilder.Entity("TunaMusicTunes.Models.Song_Genre", b =>
+                {
+                    b.HasOne("TunaMusicTunes.Models.Genre", "Genre")
+                        .WithMany("SongGenres")
+                        .HasForeignKey("GenreId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TunaMusicTunes.Models.Song", "Song")
+                        .WithMany("SongGenres")
+                        .HasForeignKey("SongId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Genre");
+
+                    b.Navigation("Song");
+                });
+
+            modelBuilder.Entity("TunaMusicTunes.Models.Artist", b =>
+                {
+                    b.Navigation("Songs");
+                });
+
+            modelBuilder.Entity("TunaMusicTunes.Models.Genre", b =>
+                {
+                    b.Navigation("SongGenres");
+                });
+
             modelBuilder.Entity("TunaMusicTunes.Models.Song", b =>
                 {
-                    b.Navigation("Genres");
+                    b.Navigation("SongGenres");
                 });
 #pragma warning restore 612, 618
         }
