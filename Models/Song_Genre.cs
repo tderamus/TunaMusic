@@ -8,7 +8,7 @@ public class Song_Genre
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
    
     public int SongId { get; set; }
-    public Song Song { get; set; }
+    public Song? Song { get; set; }
     public int GenreId { get; set; }
-    public Genre Genre { get; set; }
+    public Genre? Genre { get; set; }
 }

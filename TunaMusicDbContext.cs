@@ -18,16 +18,15 @@ public class TunaMusicDbContext : DbContext
         modelBuilder.Entity<Song>()
             .Property(s => s.Id)
             .ValueGeneratedOnAdd();
+
         modelBuilder.Entity<Artist>()
             .Property(a => a.Id)
             .ValueGeneratedOnAdd();
+
         modelBuilder.Entity<Genre>()
             .Property(g => g.Id)
             .ValueGeneratedOnAdd();
-        modelBuilder.Entity<Song_Genre>()
-            .Property(sg => sg.Id)
-            .ValueGeneratedOnAdd();
-
+       
         modelBuilder.Entity<Song>()
             .HasOne(s => s.Artist)
             .WithMany(a => a.Songs)

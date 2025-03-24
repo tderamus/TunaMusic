@@ -62,6 +62,7 @@ app.MapPost("api/song", (TunaMusicDbContext db, Song song) =>
         { 
         bool songGenreExists = db.Song_Genres.Any(sg => sg.SongId == song.Id && sg.GenreId == songGenre.GenreId);
 
+            if (!songGenreExists)
             {
                 songGenre.SongId = song.Id;
                 db.Set<Song_Genre>().Add(songGenre);
