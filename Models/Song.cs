@@ -12,5 +12,5 @@ public class Song
     public int Length { get; set; }
     public int? ArtistId { get; set; }
     public Artist? Artist { get; set; }
-    public List<Genre>? Genres { get; set; }
+    public List<Song_Genre>? SongGenres { get; set; } = new List<Song_Genre>();
 }
